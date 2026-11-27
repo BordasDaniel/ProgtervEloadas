@@ -20,15 +20,15 @@ ___(Optional: RenderDoc for frame capture and analysis)___
 - A basic framebuffer system is implemented for off-screen rendering.
 - Shader compilation and linking is implemented.
 - The two-pass rendering pipeline is implemented.
-- Post processing and vignette effects are implemented. (yet to be tested)
+- Post processing and vignette effects are implemented.
+- The main rendering loop and scene management implemented.
 
 **TODO:**
-- The main rendering loop and scene management are not yet implemented.
 - Adding comments for presentation.
 - Uploading captures
 - Usage instructions
 
-🪫**Completion status: ~70%**
+🪫**Completion status: ~90%**
 
 ----
 ## 🏗️ ClassDiagram (UML)
@@ -36,7 +36,13 @@ ___(Optional: RenderDoc for frame capture and analysis)___
 ```mermaid
 classDiagram
     class AppWindow {
-        // Need to implement the main application window and rendering loop
+        -IRenderer _renderer
+        -float _angle
+        +OnLoad() void
+        +OnResize(ResizeEventArgs e) void
+        +OnUpdateFrame(FrameEventArgs args) void
+        +OnRenderFrame(FrameEventArgs args) void
+        +OnUnload() void
     }
 
     class IRenderer {
