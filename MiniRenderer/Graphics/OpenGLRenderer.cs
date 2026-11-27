@@ -16,8 +16,10 @@ namespace MiniRenderer.Graphics
 
         public void Init(int width, int height)
         {
-            _cubeShader = new("../Shaders/cube.vert", "../Shaders/cube.frag");
-            _postShader = new("../Shaders/post.vert", "../Shaders/post.frag");
+            string ShaderPath(string file) => Path.Combine(AppContext.BaseDirectory, "Shaders", file);
+
+            _cubeShader = new(ShaderPath("cube.vert"), ShaderPath("cube.frag"));
+            _postShader = new(ShaderPath("post.vert"), ShaderPath("post.frag"));
             _fbo = new(width, height);
 
             SetupCubeGeometry();
