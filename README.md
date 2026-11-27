@@ -19,17 +19,19 @@ ___(Optional: RenderDoc for frame capture and analysis)___
 - Cube fragment and vertex shaders are implemented for rendering textured cubes.
 - A basic framebuffer system is implemented for off-screen rendering.
 - Shader compilation and linking is implemented.
-
+- The two-pass rendering pipeline is implemented.
+- Post processing and vignette effects are implemented. (yet to be tested)
 
 **TODO:**
-- The two-pass rendering pipeline is not yet implemented.
-- Post processing and vignette effects are not yet implemented.
 - The main rendering loop and scene management are not yet implemented.
+- Adding comments for presentation.
+- Uploading captures
+- Usage instructions
 
-🪫**Completion status: ~40% (as of 2026.11.23)**
+🪫**Completion status: ~70%**
 
 ----
-## 🏗️ ClassDiagram (UML) (2026.11.23 status)
+## 🏗️ ClassDiagram (UML)
 
 ```mermaid
 classDiagram
@@ -48,7 +50,17 @@ classDiagram
     }
 
     class OpenGLRenderer {
-        // Need to implement the OpenGL rendering logic
+        -Shader _cubeShader
+        -Shader _postShader
+        -Framebuffer _fbo
+        -int _cubeVao
+        -int _quadVao
+        +Init(int width, int height) void
+        +Resize(int width, int height) void
+        +BeginFrame() void
+        +DrawCube(Matrix4 model, Matrix4 view, Matrix4 projection) void
+        +EndFrame() void
+        +Dispose() void
     }
 
     class Shader {
