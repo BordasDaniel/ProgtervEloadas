@@ -22,13 +22,13 @@ ___(Optional: RenderDoc for frame capture and analysis)___
 - The two-pass rendering pipeline is implemented.
 - Post processing and vignette effects are implemented.
 - The main rendering loop and scene management implemented.
+- Captures have been added with RenderDoc.
 
 **TODO:**
 - Adding comments for presentation.
-- Uploading captures
 - Usage instructions
 
-🪫**Completion status: ~90%**
+🪫**Completion status: ~93%**
 
 ----
 ## 🏗️ ClassDiagram (UML)
