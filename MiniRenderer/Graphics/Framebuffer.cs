@@ -6,6 +6,9 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace MiniRenderer.Graphics
 {
+    /// <summary>
+    /// Off-screen render target made from a color texture and a depth/stencil renderbuffer.
+    /// </summary>
     public class Framebuffer : IDisposable
     {
         public int FboHandle { get; private set; }
@@ -19,15 +22,18 @@ namespace MiniRenderer.Graphics
 
         public void Resize(int widht, int height)
         {
+            // OpenGL attachments have fixed dimensions, so recreate them at the new size.
             Dispose();
             Create(widht, height);
         }
 
         void Create(int width, int height)
         { 
+            // Create and bind the framebuffer that receives the scene pass.
             FboHandle = GL.GenFramebuffer();
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, FboHandle);
 
+            // The color texture can be sampled by the later post-processing pass.
             ColorTextureHandle = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2D, ColorTextureHandle);
 
@@ -37,6 +43,7 @@ namespace MiniRenderer.Graphics
 
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, ColorTextureHandle, 0);
 
+            // Depth testing needs a depth attachment even though only color is sampled afterward.
             _rboHandle = GL.GenRenderbuffer();
             GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, _rboHandle);
             GL.RenderbufferStorage(RenderbufferTarget.Renderbuffer, RenderbufferStorage.Depth24Stencil8, width, height);
@@ -45,16 +52,19 @@ namespace MiniRenderer.Graphics
 
         public void Bind()
         {
+            // Subsequent drawing goes to this off-screen target until Unbind is called.
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, FboHandle);
         }
 
         public static void Unbind()
         {
+            // Framebuffer 0 is the window's default render target.
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
         }
 
         public void Dispose()
         {
+            // Release the framebuffer and all three GPU attachments it owns.
             GL.DeleteFramebuffer(FboHandle);
             GL.DeleteTexture(ColorTextureHandle);
             GL.DeleteRenderbuffer(_rboHandle);

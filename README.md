@@ -44,11 +44,9 @@ Mesh inspection view in RenderDoc:
 - Post processing and vignette effects are implemented.
 - The main rendering loop and scene management implemented.
 - Captures have been added with RenderDoc.
-
-**TODO:**
 - Adding comments for presentation.
 
-🪫**Completion status: ~97%**
+🔋**Completion status: ~100%**
 
 ----
 ## 🏗️ ClassDiagram (UML)
